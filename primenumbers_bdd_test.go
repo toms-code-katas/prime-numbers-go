@@ -1,11 +1,13 @@
-//nolint:testpackage
-package primenumbers
+package primenumbers_test
 
 import (
 	"fmt"
 	"strconv"
 	"strings"
 	"testing"
+
+	//nolint:gci
+	primenumbers "prime-numbers-go"
 
 	"github.com/cucumber/godog"
 )
@@ -50,7 +52,7 @@ func convertToIntegers(commaSeparatedString string) []uint64 {
 }
 
 func (primeCalculation *PrimeCalculation) calculatedPrimes(start, stop int) error {
-	primeCalculation.primes = CalculatePrimes(uint64(start), uint64(stop))
+	primeCalculation.primes = primenumbers.CalculatePrimes(uint64(start), uint64(stop))
 
 	return nil
 }
@@ -58,12 +60,11 @@ func (primeCalculation *PrimeCalculation) calculatedPrimes(start, stop int) erro
 func (primeCalculation *PrimeCalculation) calculatedPrimesShouldBe(expectedPrimes string) error {
 	expectedPrimesAsIntegers := convertToIntegers(expectedPrimes)
 
-	primes := CalculatePrimes(1, 10)
-
 	for i, prime := range primeCalculation.primes {
 		if expectedPrimesAsIntegers[i] != prime {
 			//nolint:goerr113
-			return fmt.Errorf("expected primes %v and calculated primes %v are not equal", expectedPrimesAsIntegers, primes)
+			return fmt.Errorf("expected primes %v and calculated primes %v are not equal",
+				expectedPrimesAsIntegers, primeCalculation.primes)
 		}
 	}
 

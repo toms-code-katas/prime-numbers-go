@@ -1,17 +1,18 @@
-//nolint:testpackage
-package primenumbers
+package primenumbers_test
 
 import (
 	"fmt"
 	"reflect"
 	"testing"
+
+	primenumbers "prime-numbers-go"
 )
 
 func TestCalculatePrimes(t *testing.T) {
 	t.Parallel()
 
 	expectedPrimes := []uint64{2, 3, 5, 7}
-	primes := CalculatePrimes(1, 10)
+	primes := primenumbers.CalculatePrimes(1, 10)
 
 	for i, prime := range primes {
 		if expectedPrimes[i] != prime {
@@ -35,7 +36,7 @@ func TestCalculatePrimesUsingTable(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		calculatedPrimes := CalculatePrimes(tc.start, tc.stop)
+		calculatedPrimes := primenumbers.CalculatePrimes(tc.start, tc.stop)
 		if !reflect.DeepEqual(tc.primes, calculatedPrimes) {
 			t.Fatalf("expected: %v, got: %v", tc.primes, calculatedPrimes)
 		}

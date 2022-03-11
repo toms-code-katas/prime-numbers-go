@@ -7,7 +7,7 @@ output:
   # Example: "checkstyle:report.json,colored-line-number"
   #
   # Default: colored-line-number
-  format: json
+  # format: json
 linters:
   # Disable all linters.
   # Default: false
