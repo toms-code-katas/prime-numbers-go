@@ -34,10 +34,10 @@ func TestFeatures(t *testing.T) {
 	}
 }
 
-func convertToInts(commaSepeartedString string) []uint64 {
-	converted := []uint64{}
+func convertToIntegers(commaSeparatedString string) []uint64 {
+	var converted []uint64
 
-	for _, intStr := range strings.Split(commaSepeartedString, ",") {
+	for _, intStr := range strings.Split(commaSeparatedString, ",") {
 		j, err := strconv.Atoi(strings.TrimSpace(intStr))
 		if err != nil {
 			panic(err)
@@ -56,14 +56,14 @@ func (primeCalculation *PrimeCalculation) calculatedPrimes(start, stop int) erro
 }
 
 func (primeCalculation *PrimeCalculation) calculatedPrimesShouldBe(expectedPrimes string) error {
-	expectedPrimesAsInts := convertToInts(expectedPrimes)
+	expectedPrimesAsIntegers := convertToIntegers(expectedPrimes)
 
 	primes := CalculatePrimes(1, 10)
 
 	for i, prime := range primeCalculation.primes {
-		if expectedPrimesAsInts[i] != prime {
+		if expectedPrimesAsIntegers[i] != prime {
 			//nolint:goerr113
-			return fmt.Errorf("Expected primes %v and calculated primes %v are not equal", expectedPrimesAsInts, primes)
+			return fmt.Errorf("expected primes %v and calculated primes %v are not equal", expectedPrimesAsIntegers, primes)
 		}
 	}
 
