@@ -14,6 +14,7 @@ type PrimeCalculation struct {
 }
 
 func TestFeatures(t *testing.T) {
+	t.Parallel()
 	suite := godog.TestSuite{
 		ScenarioInitializer: InitializeScenario,
 		Options: &godog.Options{
@@ -30,29 +31,37 @@ func TestFeatures(t *testing.T) {
 
 func convertToInts(commaSepeartedString string) []uint64 {
 	var converted = []uint64{}
+
 	for _, intStr := range strings.Split(commaSepeartedString, ",") {
 		j, err := strconv.Atoi(strings.TrimSpace(intStr))
 		if err != nil {
 			panic(err)
 		}
+
 		converted = append(converted, uint64(j))
 	}
+
 	return converted
 }
 
 func (primeCalculation *PrimeCalculation) calculatedPrimes(start, stop int) error {
 	primeCalculation.primes = CalculatePrimes(uint64(start), uint64(stop))
+
 	return nil
 }
 
 func (primeCalculation *PrimeCalculation) calculatedPrimesShouldBe(expectedPrimes string) error {
 	var expectedPrimesAsInts = convertToInts(expectedPrimes)
+
 	primes := CalculatePrimes(1, 10)
+
 	for i, prime := range primeCalculation.primes {
 		if expectedPrimesAsInts[i] != prime {
+			//nolint:goerr113
 			return fmt.Errorf("Expected primes %v and calculated primes %v are not equal", expectedPrimesAsInts, primes)
 		}
 	}
+
 	return nil
 }
 
@@ -63,7 +72,10 @@ func (primeCalculation *PrimeCalculation) primeCalculationThrowsException() erro
 func InitializeScenario(ctx *godog.ScenarioContext) {
 	primeCalculation := &PrimeCalculation{}
 
-	ctx.Step(`^I calculate the prime numbers between (-?[0-9]{0,10}) and (-?[0-9]{0,10})$`, primeCalculation.calculatedPrimes)
-	ctx.Step(`^the calculated prime numbers should be (\d.*)$`, primeCalculation.calculatedPrimesShouldBe)
-	ctx.Step(`^the calculated prime numbers should be Exception$`, primeCalculation.primeCalculationThrowsException)
+	ctx.Step(`^I calculate the prime numbers between (-?[0-9]{0,10}) and (-?[0-9]{0,10})$`,
+		primeCalculation.calculatedPrimes)
+	ctx.Step(`^the calculated prime numbers should be (\d.*)$`,
+		primeCalculation.calculatedPrimesShouldBe)
+	ctx.Step(`^the calculated prime numbers should be Exception$`,
+		primeCalculation.primeCalculationThrowsException)
 }
