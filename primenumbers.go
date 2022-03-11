@@ -2,6 +2,7 @@ package primenumbers
 
 func CalculatePrimes(start uint64, stop uint64) []uint64 {
 	primes := make([]uint64, 0)
+
 	for number := start; number <= stop; number++ {
 		if IsPrimeToTen(number) {
 			primes = append(primes, number)
@@ -12,8 +13,9 @@ func CalculatePrimes(start uint64, stop uint64) []uint64 {
 		isPrime := true
 
 		for _, divisor := range [4]uint64{2, 3, 5, 7} {
-			if number%uint64(divisor) == 0 {
+			if number%divisor == 0 {
 				isPrime = false
+
 				break
 			}
 		}
@@ -22,6 +24,7 @@ func CalculatePrimes(start uint64, stop uint64) []uint64 {
 			primes = append(primes, number)
 		}
 	}
+
 	return primes
 }
 
