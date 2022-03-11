@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+
+	"github.com/cucumber/godog"
+	// "github.com/cucumber/godog"
 )
 
 func TestCalculatePrimes(t *testing.T) {
@@ -35,4 +38,37 @@ func TestCalculatePrimesUsingTable(t *testing.T) {
 			t.Fatalf("expected: %v, got: %v", tc.primes, calculatedPrimes)
 		}
 	}
+}
+
+func TestFeatures(t *testing.T) {
+	suite := godog.TestSuite{
+		ScenarioInitializer: InitializeScenario,
+		Options: &godog.Options{
+			Format:   "pretty",
+			Paths:    []string{"features"},
+			TestingT: t, // Testing instance that will run subtests.
+		},
+	}
+
+	if suite.Run() != 0 {
+		t.Fatal("non-zero status returned, failed to run feature tests")
+	}
+}
+
+func iCalculateThePrimeNumbersBetweenAnd(arg1, arg2 int) error {
+	return godog.ErrPending
+}
+
+func theCalculatedPrimeNumbersShouldBe(arg1 string) error {
+	return godog.ErrPending
+}
+
+func theCalculatedPrimeNumbersShouldBeException() error {
+	return godog.ErrPending
+}
+
+func InitializeScenario(ctx *godog.ScenarioContext) {
+	ctx.Step(`^I calculate the prime numbers between (-?[0-9]{0,10}) and (-?[0-9]{0,10})$`, iCalculateThePrimeNumbersBetweenAnd)
+	ctx.Step(`^the calculated prime numbers should be \d.*$`, theCalculatedPrimeNumbersShouldBe)
+	ctx.Step(`^the calculated prime numbers should be Exception$`, theCalculatedPrimeNumbersShouldBeException)
 }
