@@ -35,7 +35,7 @@ func TestFeatures(t *testing.T) {
 }
 
 func convertToIntegers(commaSeparatedString string) []uint64 {
-	var converted []uint64
+	converted := []uint64{}
 
 	for _, intStr := range strings.Split(commaSeparatedString, ",") {
 		j, err := strconv.Atoi(strings.TrimSpace(intStr))
