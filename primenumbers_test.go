@@ -1,7 +1,6 @@
 package primenumbers_test
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 
@@ -11,13 +10,11 @@ import (
 func TestCalculatePrimes(t *testing.T) {
 	t.Parallel()
 
-	expectedPrimes := []uint64{2, 3, 5, 7}
-	primes := primenumbers.CalculatePrimes(1, 10)
+	primes := []uint64{2, 3, 5, 7}
+	calculatedPrimes := primenumbers.CalculatePrimes(1, 10)
 
-	for i, prime := range primes {
-		if expectedPrimes[i] != prime {
-			t.Fatal(fmt.Sprintf("Expected primes %v and calculated primes %v are not equal", expectedPrimes, primes))
-		}
+	if !reflect.DeepEqual(primes, calculatedPrimes) {
+		t.Fatalf("expected: %v, got: %v", primes, calculatedPrimes)
 	}
 }
 
