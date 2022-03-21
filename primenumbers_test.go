@@ -10,6 +10,7 @@ import (
 func TestCalculatePrimes(t *testing.T) {
 	t.Parallel()
 
+	//nolint:ifshort // See https://github.com/esimonov/ifshort/issues/28
 	primes := []uint64{2, 3, 5, 7}
 	calculatedPrimes := primenumbers.CalculatePrimes(1, 10)
 

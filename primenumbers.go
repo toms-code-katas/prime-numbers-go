@@ -1,6 +1,6 @@
 package primenumbers
 
-// CalculatePrimes will calculate prime numbers between start and stop
+// CalculatePrimes will calculate prime numbers between start and stop.
 func CalculatePrimes(start uint64, stop uint64) []uint64 {
 	primes := make([]uint64, 0)
 
